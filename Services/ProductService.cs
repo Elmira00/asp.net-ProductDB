@@ -17,6 +17,11 @@ namespace asp.net_task2.Services
             await _productRepository.AddAsync(product);
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            await _productRepository.DeleteAsync(id);
+        }
+
 
         public async Task<List<Product>> GetAllByKeyAsync(string key = "")
         {

@@ -4,6 +4,7 @@ namespace asp.net_task2.Repositories
     public interface IProductRepository
     {
         Task AddAsync(Product product);
+        Task DeleteAsync(int id);
         Task<List<Product>> GetAllAsync(string key);
     }
 }

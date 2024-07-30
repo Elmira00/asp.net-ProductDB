@@ -6,5 +6,6 @@ namespace asp.net_task2.Services
     {
         Task<List<Product>> GetAllByKeyAsync(string key = "");
         Task AddAsync(Product product);
+        Task DeleteAsync(int id);
     }
 }

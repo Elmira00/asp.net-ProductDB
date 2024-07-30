@@ -18,10 +18,19 @@ namespace asp.net_task2.Repositories
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
         }
+        public async Task DeleteAsync(int id)
+        {
+            var product = _context.Products.Find(id);
+            if (product != null)
+            {
+                _context.Products.Remove(product);
+            }
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<List<Product>> GetAllAsync(string key)
         {
-            return await _context.Products.Where(i => i.Id.ToString() == key).ToListAsync();
+            return await _context.Products.ToListAsync();
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using asp.net_task2.Services;
+﻿using asp.net_task2.Models;
+using asp.net_task2.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace asp.net_task2.Controllers
@@ -15,9 +16,22 @@ namespace asp.net_task2.Controllers
         public async Task<IActionResult> Index(string key = "")
         {
             var result = await _productService.GetAllByKeyAsync(key);
-            return Ok(result);
+            var vm = new ProductListViewModel
+            {
+                Products = result
+            };
+            return View(vm);
         }
-
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _productService.GetAllByKeyAsync("");
+            var item = result.SingleOrDefault(e => e.Id == id);
+            if (item != null)
+            {
+                _productService.DeleteAsync(item.Id);
+            }
+            return RedirectToAction("Index");
+        }
         // GET: ProductController/Details/5
         public ActionResult Details(int id)
         {
@@ -66,25 +80,6 @@ namespace asp.net_task2.Controllers
             }
         }
 
-        // GET: ProductController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
 
-        // POST: ProductController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }
