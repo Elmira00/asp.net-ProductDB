@@ -5,6 +5,8 @@ namespace asp.net_task2.Repositories
     {
         Task AddAsync(Product product);
         Task DeleteAsync(int id);
-        Task<List<Product>> GetAllAsync(string key);
+        Task UpdateAsync(int id, Product updatedProduct);
+        Task<List<Product>> GetAllAsync();
+
     }
 }

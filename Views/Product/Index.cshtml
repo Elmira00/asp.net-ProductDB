@@ -2,14 +2,14 @@
 <section style="display:flex" >
 @foreach(var item in Model.Products)
 {
-        <section class="container bg-info" style="padding:20px;display:inline-block;margin:20px; border-radius:10px;box-shadow:0px9px10px grey">
+        <section class="container bg-info" style="width:40%;padding:20px;display:inline-block;margin:20px; border-radius:10px;box-shadow:0px9px10px grey">
             <img style="border-radius:10px;width:150px;height:150px" src="@item.ImagePath" alt="product-img">
         <h3>Name : @item.Name</h3>
             <h3 class="text-danger">Price : @item.Price</h3>
             <h4 class="text-success">Discount : @item.Discount</h4>
         <h6 >Description : @item.Description</h6>
             <a style="color:black;background-color:pink; border-radius:5px;display:inline-block;padding:4px;margin:5px;border:1px solid white;text-decoration:none" asp-controller="Product" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            <a style="color:black;background-color:pink; border-radius:5px;display:inline-block;padding:4px;margin:5px;border:1px solid white;text-decoration:none" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Edit </a>
+            <a style="color:black;background-color:pink; border-radius:5px;display:inline-block;padding:4px;margin:5px;border:1px solid white;text-decoration:none" asp-controller="Product" asp-action="Update" asp-route-id="@item.Id">Edit </a>
     </section>
 }
 </section>

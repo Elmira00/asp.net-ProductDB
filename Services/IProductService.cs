@@ -4,8 +4,9 @@ namespace asp.net_task2.Services
 {
     public interface IProductService
     {
-        Task<List<Product>> GetAllByKeyAsync(string key = "");
+        Task<List<Product>> GetAllAsync();
         Task AddAsync(Product product);
         Task DeleteAsync(int id);
+        Task UpdateAsync(int id, Product updatedProduct);
     }
 }

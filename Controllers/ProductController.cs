@@ -1,4 +1,5 @@
-﻿using asp.net_task2.Models;
+﻿using asp.net_task2.Entities;
+using asp.net_task2.Models;
 using asp.net_task2.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,9 +14,9 @@ namespace asp.net_task2.Controllers
         {
             _productService = productService;
         }
-        public async Task<IActionResult> Index(string key = "")
+        public async Task<IActionResult> Index()
         {
-            var result = await _productService.GetAllByKeyAsync(key);
+            var result = await _productService.GetAllAsync();
             var vm = new ProductListViewModel
             {
                 Products = result
@@ -24,7 +25,7 @@ namespace asp.net_task2.Controllers
         }
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _productService.GetAllByKeyAsync("");
+            var result = await _productService.GetAllAsync();
             var item = result.SingleOrDefault(e => e.Id == id);
             if (item != null)
             {
@@ -32,52 +33,50 @@ namespace asp.net_task2.Controllers
             }
             return RedirectToAction("Index");
         }
-        // GET: ProductController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: ProductController/Create
-        public ActionResult Create()
+        [HttpGet]
+        public IActionResult Add()
         {
-            return View();
+            var vm = new ProductAddViewModel
+            {
+                Product = new Product()
+            };
+            return View(vm);
         }
 
-        // POST: ProductController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Add(ProductAddViewModel vm)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            await _productService.AddAsync(vm.Product);
+            return RedirectToAction("Index");
         }
+
 
         // GET: ProductController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            return View();
+            var result = await _productService.GetAllAsync();
+            var item = result.SingleOrDefault(e => e.Id == id);
+            if (item != null)
+            {
+                var vm = new ProductUpdateViewModel
+                {
+                    Product = item
+                };
+                return View(vm);
+            }
+            return NotFound();
         }
 
         // POST: ProductController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Update(int id, ProductUpdateViewModel vm)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+
+            await _productService.UpdateAsync(id, vm.Product);
+            return RedirectToAction("Index");
+
         }
 
 

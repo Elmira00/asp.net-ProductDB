@@ -28,10 +28,29 @@ namespace asp.net_task2.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Product>> GetAllAsync(string key)
+        public async Task<List<Product>> GetAllAsync()
         {
             return await _context.Products.ToListAsync();
         }
 
+        public async Task UpdateAsync(int id, Product updatedProduct)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null)
+            {
+                throw new Exception("Product not found");
+            }
+
+            product.Name = updatedProduct.Name;
+            product.Description = updatedProduct.Description;
+            product.Discount = updatedProduct.Discount;
+            product.Price = updatedProduct.Price;
+            product.ImagePath = updatedProduct.ImagePath;
+
+            _context.Entry(product).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

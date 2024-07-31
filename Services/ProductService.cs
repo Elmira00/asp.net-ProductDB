@@ -23,9 +23,14 @@ namespace asp.net_task2.Services
         }
 
 
-        public async Task<List<Product>> GetAllByKeyAsync(string key = "")
+        public async Task<List<Product>> GetAllAsync()
         {
-            return await _productRepository.GetAllAsync(key);
+            return await _productRepository.GetAllAsync();
+        }
+
+        public async Task UpdateAsync(int id, Product updatedProduct)
+        {
+            await _productRepository.UpdateAsync(id, updatedProduct);
         }
     }
 }
